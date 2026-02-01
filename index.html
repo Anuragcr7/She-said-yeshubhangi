@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Valentine 💖</title>
+
+  <style>
+    /* ===== Body & Centering ===== */
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      font-family: "Poppins", sans-serif;
+      overflow: hidden;
+    }
+
+    /* ===== Card Styles ===== */
+    .card, .yes-screen {
+      background: white;
+      border-radius: 25px;
+      padding: 30px 20px 40px;
+      width: 90%;
+      max-width: 380px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+      transition: all 0.5s ease, opacity 0.5s ease;
+    }
+
+    h1 {
+      color: #ff2f7d;
+      margin-bottom: 20px;
+    }
+
+    /* ===== Heart Container & Heart ===== */
+    .heart-container {
+      position: relative;
+      width: 160px;
+      height: 160px;
+      margin: 30px auto;
+    }
+
+    .heart {
+      width: 100%;
+      height: 100%;
+      background: #ff4d6d;
+      position: absolute;
+      top: 0; left: 0;
+      transform: rotate(-45deg);
+      animation: pulse 1.5s infinite;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      width: 100%;
+      height: 100%;
+      background: #ff4d6d;
+      border-radius: 50%;
+      position: absolute;
+    }
+
+    .heart::before { top: -50%; left: 0; }
+    .heart::after { top: 0; left: 50%; }
+
+    .heart-text {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%) rotate(45deg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    @keyframes pulse {
+      0% { transform: rotate(-45deg) scale(1); }
+      50% { transform: rotate(-45deg) scale(1.08); }
+      100% { transform: rotate(-45deg) scale(1); }
+    }
+
+    /* ===== Buttons ===== */
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    button {
+      border: none;
+      padding: 14px 24px;
+      font-size: 16px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 600;
+      position: relative;
+      transition: all 0.2s ease;
+    }
+
+    .yes {
+      background: #ff4d88;
+      color: white;
+    }
+
+    .no {
+      background: #d3d3d3;
+      color: #777;
+    }
+
+    /* Make NO button dodge clicks */
+    .no:hover {
+      top: calc(-10px + (Math.random() * 20px));
+      left: calc(-10px + (Math.random() * 20px));
+    }
+
+    /* ===== YES SCREEN ===== */
+    .yes-screen {
+      display: none;
+    }
+
+    .yes-screen h1 {
+      font-size: 28px;
+    }
+
+    .ring {
+      font-size: 60px;
+      margin: 20px 0;
+      animation: pop 1s ease infinite alternate;
+    }
+
+    @keyframes pop {
+      from { transform: scale(1); }
+      to { transform: scale(1.15); }
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 400px) {
+      .heart-container { width: 120px; height: 120px; }
+      .heart::before, .heart::after { width: 120px; height: 120px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- FIRST SCREEN -->
+  <div class="card" id="mainCard">
+    <h1>Will you be my Valentine?</h1>
+
+    <div class="heart-container">
+      <div class="heart">
+        <div class="heart-text">Shubhangi ❤️</div>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button class="yes" onclick="celebrate()">YES 💖</button>
+      <button class="no">NO ❌</button>
+    </div>
+  </div>
+
+  <!-- YES SCREEN -->
+  <div class="yes-screen" id="yesScreen">
+    <h1>She said YES 💖</h1>
+    <div class="ring">💍</div>
+    <p style="font-size:18px;color:#ff4d6d;font-weight:600;">
+      Best Valentine ever, Shubhangi ❤️
+    </p>
+  </div>
+
+  <!-- Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <script>
+    function celebrate() {
+      // Multi-color confetti
+      confetti({
+        particleCount: 200,
+        spread: 100,
+        origin: { y: 0.6 },
+        colors: ['#ff4d6d', '#ff9a9e', '#ff2f7d']
+      });
+
+      setTimeout(() => {
+        confetti({
+          particleCount: 200,
+          spread: 140,
+          origin: { y: 0.4 },
+          colors: ['#ff4d6d', '#ff9a9e', '#ff2f7d']
+        });
+      }, 400);
+
+      // Smooth transition to YES screen
+      const mainCard = document.getElementById("mainCard");
+      const yesScreen = document.getElementById("yesScreen");
+
+      mainCard.style.opacity = 0;
+      setTimeout(() => {
+        mainCard.style.display = "none";
+        yesScreen.style.display = "block";
+        yesScreen.style.opacity = 0;
+        setTimeout(() => { yesScreen.style.opacity = 1; }, 50);
+      }, 500);
+    }
+  </script>
+
+</body>
+</html>
